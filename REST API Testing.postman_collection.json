@@ -1,0 +1,889 @@
+{
+  "info": {
+    "_postman_id": "73729ae8-fbba-422f-bf9e-3c77633e8d5e",
+    "name": "REST API Testing",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57986942",
+    "_collection_link": "https://go.postman.co/collection/57986942-73729ae8-fbba-422f-bf9e-3c77633e8d5e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Users → Get All Users",
+          "item": [
+            {
+              "name": "TC001",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is below 2000ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response contains users\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data).to.be.an(\"array\");\r",
+                      "    pm.expect(data.length).to.be.above(0);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"User contains required fields\", function () {\r",
+                      "    const user = pm.response.json()[0];\r",
+                      "\r",
+                      "    pm.expect(user).to.have.property(\"id\");\r",
+                      "    pm.expect(user).to.have.property(\"name\");\r",
+                      "    pm.expect(user).to.have.property(\"username\");\r",
+                      "    pm.expect(user).to.have.property(\"email\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Users → Get User By ID",
+          "item": [
+            {
+              "name": "TC002",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Correct user ID is returned\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.id).to.eql(1);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"User name exists\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.name).to.exist;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Email exists\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.email).to.exist;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is acceptable\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users/1",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User",
+          "item": [
+            {
+              "name": "TC004",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Created user name is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.name).to.eql(\"Naresh Varada\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Created username is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.username).to.eql(\"naresh\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Created email is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.email).to.eql(\"naresh@example.com\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is below 2000ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Naresh Varada\",\r\n    \"username\": \"naresh\",\r\n    \"email\": \"naresh@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "item": [
+            {
+              "name": "TC005",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Correct user ID is returned\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.id).to.eql(1);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Updated name is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.name).to.eql(\"Naresh Updated\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Updated username is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.username).to.eql(\"naresh_updated\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Updated email is correct\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.email).to.eql(\"naresh.updated@example.com\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is acceptable\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Naresh Updated\",\r\n    \"username\": \"naresh_updated\",\r\n    \"email\": \"naresh.updated@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users/1",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Partial Update User",
+          "item": [
+            {
+              "name": "TC006",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Email was updated\", function () {\r",
+                      "    const data = pm.response.json();\r",
+                      "    pm.expect(data.email).to.eql(\"newemail@example.com\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is JSON\", function () {\r",
+                      "    pm.response.to.be.json;\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"newemail@example.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users/1",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete user",
+          "item": [
+            {
+              "name": "TC007",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is acceptable\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response is received\", function () {\r",
+                      "    pm.expect(pm.response).to.exist;\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "https://jsonplaceholder.typicode.com/users/1",
+                  "protocol": "https",
+                  "host": [
+                    "jsonplaceholder",
+                    "typicode",
+                    "com"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "TC008",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Posts are returned\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data).to.be.an(\"array\");\r",
+                  "    pm.expect(data.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Post contains required fields\", function () {\r",
+                  "    const post = pm.response.json()[0];\r",
+                  "\r",
+                  "    pm.expect(post).to.have.property(\"userId\");\r",
+                  "    pm.expect(post).to.have.property(\"id\");\r",
+                  "    pm.expect(post).to.have.property(\"title\");\r",
+                  "    pm.expect(post).to.have.property(\"body\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC009",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// ================================\r",
+                  "// COMMON VALIDATIONS\r",
+                  "// ================================\r",
+                  "\r",
+                  "pm.test(\"Response time is below 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "// ================================\r",
+                  "// TC009 - GET POST BY ID\r",
+                  "// ================================\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Correct post ID is returned\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.id).to.eql(1);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Post title exists\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Post body exists\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User ID exists\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.userId).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "// ================================\r",
+                  "// HEADER VALIDATION\r",
+                  "// ================================\r",
+                  "\r",
+                  "pm.test(\"Content-Type header exists\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Content-Type is JSON\", function () {\r",
+                  "    const contentType = pm.response.headers.get(\"Content-Type\");\r",
+                  "    pm.expect(contentType).to.include(\"application/json\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC010",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Post title is correct\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(\"REST API Testing\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Post body is correct\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(\"Testing REST APIs using Postman\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User ID is correct\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.userId).to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"REST API Testing\",\r\n    \"body\": \"Testing REST APIs using Postman\",\r\n    \"userId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC011",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Updated title is correct\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.title).to.eql(\"Updated REST API Testing\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Updated body is correct\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "    pm.expect(data.body).to.eql(\"Updated API testing project\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated REST API Testing\",\r\n    \"body\": \"Updated API testing project\",\r\n    \"userId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC012",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Delete request is successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Posts By User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"All returned posts belong to user 1\", function () {\r",
+                  "    const data = pm.response.json();\r",
+                  "\r",
+                  "    data.forEach(function(post) {\r",
+                  "        pm.expect(post.userId).to.eql(1);\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts?userId=1",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative Tests",
+      "item": [
+        {
+          "name": "TC003-Negative Tests → Invalid User ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"API handles invalid user ID\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 404]);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is received\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/9999",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "users",
+                "9999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC013-Invaildendpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is acceptable\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is received\", function () {\r",
+                  "    pm.expect(pm.response).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/invalidendpoint",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "invalidendpoint"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC014-InvaildpostID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Invalid post ID is handled\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 404]);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/9999",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts",
+                "9999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
